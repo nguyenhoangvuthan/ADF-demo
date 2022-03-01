@@ -1,0 +1,77 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "MoviesADF03012022"
+		},
+		"ADLS2_Service_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'ADLS2_Service'"
+		},
+		"ADLS_ServiceTarget_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'ADLS_ServiceTarget'"
+		},
+		"ADLS2_Service_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://moviesdemoadls2.dfs.core.windows.net"
+		},
+		"ADLS_ServiceTarget_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://adls2target.dfs.core.windows.net"
+		},
+		"Web_LinkService_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://raw.githubusercontent.com/djpmsft/adf-ready-demo/master/moviesDB.csv"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "MoviesADF03012022_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"ADLS2_Service_accountKey": {
+						"value": "[parameters('ADLS2_Service_accountKey')]"
+					},
+					"ADLS_ServiceTarget_accountKey": {
+						"value": "[parameters('ADLS_ServiceTarget_accountKey')]"
+					},
+					"ADLS2_Service_properties_typeProperties_url": {
+						"value": "[parameters('ADLS2_Service_properties_typeProperties_url')]"
+					},
+					"ADLS_ServiceTarget_properties_typeProperties_url": {
+						"value": "[parameters('ADLS_ServiceTarget_properties_typeProperties_url')]"
+					},
+					"Web_LinkService_properties_typeProperties_url": {
+						"value": "[parameters('Web_LinkService_properties_typeProperties_url')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}

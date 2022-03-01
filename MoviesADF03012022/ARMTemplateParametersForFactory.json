@@ -1,0 +1,24 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "MoviesADF03012022"
+		},
+		"ADLS2_Service_accountKey": {
+			"value": ""
+		},
+		"ADLS_ServiceTarget_accountKey": {
+			"value": ""
+		},
+		"ADLS2_Service_properties_typeProperties_url": {
+			"value": "https://moviesdemoadls2.dfs.core.windows.net"
+		},
+		"ADLS_ServiceTarget_properties_typeProperties_url": {
+			"value": "https://adls2target.dfs.core.windows.net"
+		},
+		"Web_LinkService_properties_typeProperties_url": {
+			"value": "https://raw.githubusercontent.com/djpmsft/adf-ready-demo/master/moviesDB.csv"
+		}
+	}
+}

@@ -1,0 +1,22 @@
+{
+	"name": "MoviesDataWebCopyTarget",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ADLS_ServiceTarget",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileSystem": "targetdestination"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}

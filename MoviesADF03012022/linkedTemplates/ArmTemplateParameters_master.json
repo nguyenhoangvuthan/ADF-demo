@@ -11,6 +11,9 @@
 		"ADLS_ServiceTarget_accountKey": {
 			"value": ""
 		},
+		"AzureSQLdatabse_Service_connectionString": {
+			"value": ""
+		},
 		"ADLS2_Service_properties_typeProperties_url": {
 			"value": "https://moviesdemoadls2.dfs.core.windows.net"
 		},

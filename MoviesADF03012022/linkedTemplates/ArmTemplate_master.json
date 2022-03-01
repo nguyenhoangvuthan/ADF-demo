@@ -15,6 +15,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'ADLS_ServiceTarget'"
 		},
+		"AzureSQLdatabse_Service_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSQLdatabse_Service'"
+		},
 		"ADLS2_Service_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://moviesdemoadls2.dfs.core.windows.net"
@@ -59,6 +63,9 @@
 					},
 					"ADLS_ServiceTarget_accountKey": {
 						"value": "[parameters('ADLS_ServiceTarget_accountKey')]"
+					},
+					"AzureSQLdatabse_Service_connectionString": {
+						"value": "[parameters('AzureSQLdatabse_Service_connectionString')]"
 					},
 					"ADLS2_Service_properties_typeProperties_url": {
 						"value": "[parameters('ADLS2_Service_properties_typeProperties_url')]"

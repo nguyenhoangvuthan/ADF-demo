@@ -1,0 +1,16 @@
+{
+	"name": "AzureDataTable",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSQLdatabse_Service",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "MoviesAnalytics"
+		}
+	}
+}

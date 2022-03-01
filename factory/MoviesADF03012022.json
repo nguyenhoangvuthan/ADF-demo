@@ -1,0 +1,9 @@
+{
+	"name": "MoviesADF03012022",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "2bc81b9a-a7f9-4abd-af88-a1dfb35ccb55",
+		"tenantId": "c52023da-af69-4493-a601-36b0b97d0c3a"
+	}
+}

@@ -161,6 +161,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
+						"fileName": "MoviesDAtaADLSCopyTarget",
 						"fileSystem": "targetdestination"
 					},
 					"columnDelimiter": ",",
@@ -307,6 +308,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
+						"fileName": "MoviesDataWebCopyTarget",
 						"fileSystem": "targetdestination"
 					},
 					"columnDelimiter": ",",
@@ -390,7 +392,8 @@
 					"elapsedTimeMetric": {},
 					"cancelAfter": {}
 				},
-				"annotations": []
+				"annotations": [],
+				"lastPublishTime": "2022-03-01T03:57:32Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/MoviesDataWeb')]",
@@ -448,54 +451,6 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/MoviesDataADLS')]",
 				"[concat(variables('factoryId'), '/datasets/AzureDataTable')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Mapping Data Transform')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "MoviesDataTest",
-								"type": "DatasetReference"
-							},
-							"name": "Movies"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "MoviesDataTestTarget",
-								"type": "DatasetReference"
-							},
-							"name": "MoviesClean"
-						},
-						{
-							"dataset": {
-								"referenceName": "MoviesDataTestTarget",
-								"type": "DatasetReference"
-							},
-							"name": "MoviesByYearSink"
-						}
-					],
-					"transformations": [
-						{
-							"name": "YearExtraction"
-						},
-						{
-							"name": "MoviesByYear"
-						}
-					],
-					"script": "source(output(\n\t\tmovieId as short,\n\t\ttitle as string,\n\t\tgenres as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> Movies\nMovies derive(Year = toInteger(trim(right(title, 6), '()'))) ~> YearExtraction\nYearExtraction aggregate(groupBy(Year),\n\tMoviesCount = count()) ~> MoviesByYear\nYearExtraction sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['MoviesClean'],\n\tumask: 0022,\n\tpreCommands: [],\n\tpostCommands: [],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tpartitionBy('hash', 1)) ~> MoviesClean\nMoviesByYear sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['MoviesByYear'],\n\tumask: 0022,\n\tpreCommands: [],\n\tpostCommands: [],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tpartitionBy('hash', 1)) ~> MoviesByYearSink"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/MoviesDataTest')]",
-				"[concat(variables('factoryId'), '/datasets/MoviesDataTestTarget')]"
 			]
 		},
 		{
@@ -606,60 +561,13 @@
 					"elapsedTimeMetric": {},
 					"cancelAfter": {}
 				},
-				"annotations": []
+				"annotations": [],
+				"lastPublishTime": "2022-03-01T07:43:03Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/MoviesDataADLS')]",
 				"[concat(variables('factoryId'), '/datasets/MoviesDataWebCopyTarget')]",
 				"[concat(variables('factoryId'), '/dataflows/Mapping Data Flow')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Transform Data')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Mapping Data Transform",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "1.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "Mapping Data Transform",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"Movies": {},
-									"MoviesClean": {},
-									"MoviesByYearSink": {}
-								}
-							},
-							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
-							},
-							"traceLevel": "Fine"
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/Mapping Data Transform')]"
 			]
 		}
 	]
